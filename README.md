@@ -2,4 +2,8 @@
 
 ## Dependencies 
 
-Dependencies should be put in a .venv so that you don't install global packages, which is a terrible idea. I use `uv venv` then `source .venv/bin/activate.fish`
+Use `uv` to handle virtual environment. Install with `python -m pip install uv` or whatever you want idk look it up
+
+`uv install --group dev` to install dependencies from pyprokect.toml
+
+
