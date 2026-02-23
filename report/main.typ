@@ -1,6 +1,42 @@
 #import "@preview/charged-ieee:0.1.4": ieee
 #import "@preview/slashion:0.1.1": slash-frac as sfrac
 
+#set document(title: "MLVU information sheet")
+#set page(margin: 2.5cm)
+
+#align(center)[
+  #text(size: 1.8em, weight: "bold")[MLVU information sheet]
+]
+
+_Please include this page in your report either at the start or at the end, before the appendix. Do not change the formatting._
+
+*Group number*
+
+00
+
+*Authors*
+
+#table(
+  columns: (auto, auto),
+  align: right,
+  stroke: none,
+  [name], [student number],
+  table.hline(),
+  [Jane Doe], [1234567],
+  [], [],
+  [], [],
+)
+
+*Software used* _Describe briefly which software and libraries you relied on. If you built a particular algorithm from scratch, make sure to state it explicitly here._
+
+*Use of AI tools* _If you used tools like ChatGPT or Github Copilot in any phase of the report, please detail here which tools you used, what parts of the work you used them for and how. Note that if you use an AI tool and don't report it, it's considered fraud, so be detailed. Note also that having an AI tool write for you is not allowed. If no AI tools were used, please state that explicitly._
+
+*Link to code (optional)* _If you would like to share your code, you can link to your repository here._
+
+*Group disagreements (optional)* _If there are any disagreements in the group, you may *not* remove a student from the author list without their consent. You should bring disagreements to our attention early. As a last resort, you can describe any grievances here._
+
+#pagebreak()
+
 #set table(
   columns: (6em, auto),
   inset: (x: 8pt, y: 4pt),
