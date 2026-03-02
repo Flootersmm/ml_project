@@ -53,6 +53,12 @@ _Please include this page in your report either at the start or at the end, befo
       organization: [Student Nr: 2699315],
       email: "c.j.clough@student.vu.nl",
     ),
+    (
+      name: "Samuel Power",
+      department: [VUNetId: spo237],
+      organization: [Student Nr: 2800107],
+      email: "s.j.power@student.vu.nl",
+    ),
   ),
   // index-terms: ("Scientific writing", "Typesetting", "Document creation", "Syntax"),
   bibliography: bibliography("refs.bib"),
