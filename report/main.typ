@@ -12,7 +12,7 @@ _Please include this page in your report either at the start or at the end, befo
 
 *Group number*
 
-00
+156
 
 *Authors*
 
@@ -125,3 +125,7 @@ Tables too:
 Generally you can surround things in figures or blocks and such, it's all super functional, the typst website will guide you
 
 Typst website also have all the symbol names, and some symbols have subsets like $subset$ has $subset.eq$
+
+#include "andi.typ"
+#include "conrad.typ"
+#include "sam.typ"
