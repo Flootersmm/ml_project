@@ -22,9 +22,9 @@ _Please include this page in your report either at the start or at the end, befo
   stroke: none,
   [name], [student number],
   table.hline(),
-  [Jane Doe], [1234567],
-  [], [],
-  [], [],
+  [Conrad Clough], [2699315],
+  [Samuel Power], [2800107],
+  [ANDI FILL THIS OUT :)], [THIS TOOOOO],
 )
 
 *Software used* _Describe briefly which software and libraries you relied on. If you built a particular algorithm from scratch, make sure to state it explicitly here._
@@ -58,6 +58,12 @@ _Please include this page in your report either at the start or at the end, befo
       department: [VUNetId: spo237],
       organization: [Student Nr: 2800107],
       email: "s.j.power@student.vu.nl",
+    ),
+    (
+      name: "mr. andy",
+      department: [VUNetId: x],
+      organization: [Student Nr: x],
+      email: "lovelyman@student.vu.nl",
     ),
   ),
   // index-terms: ("Scientific writing", "Typesetting", "Document creation", "Syntax"),
