@@ -45,7 +45,7 @@ _Please include this page in your report either at the start or at the end, befo
 )
 
 #show: ieee.with(
-  title: [TITLE HERE],
+  title: [How can machine learning-based DDoS detection models be designed to minimise false positive rates while maintaining high detection accuracy on both low- and high-powered hardware?],
   authors: (
     (
       name: "Conrad Clough",
@@ -66,14 +66,58 @@ _Please include this page in your report either at the start or at the end, befo
       email: "lovelyman@student.vu.nl",
     ),
   ),
-  // index-terms: ("Scientific writing", "Typesetting", "Document creation", "Syntax"),
+  index-terms: (
+    "DDoS detection",
+    "machine learning",
+    "false positive rate",
+    "k-Nearest Neighbors",
+    "Random Forest",
+    "Logistic Regression",
+    "computational efficiency",
+  ),
   bibliography: bibliography("refs.bib"),
   figure-supplement: [Fig.],
 )
 
 #set page(numbering: "1")
 
+= Abstract <sec:abstract>
+#text(fill: blue)[
+  #link("https://users.ece.cmu.edu/~koopman/essays/abstract.html")
+
+  Checklist: Parts of an Abstract
+
+  Despite the fact that an abstract is quite brief, it must do almost as much work as the multi-page paper that follows it. In a computer architecture paper, this means that it should in most cases include the following sections. Each section is typically a single sentence, although there is room for creativity. In particular, the parts may be merged or spread among a set of sentences. Use the following as a checklist for your next abstract:
+
+  Motivation:
+  Why do we care about the problem and the results? If the problem isn't obviously "interesting" it might be better to put motivation first; but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the problem statement first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
+  Problem statement:
+  What problem are you trying to solve? What is the scope of your work (a generalized approach, or for a specific situation)? Be careful not to use too much jargon. In some cases it is appropriate to put the problem statement before the motivation, but usually this only works if most readers already understand why the problem is important.
+  Approach:
+  How did you go about solving or making progress on the problem? Did you use simulation, analytic models, prototype construction, or analysis of field data for an actual product? What was the extent of your work (did you look at one application program or a hundred programs in twenty different programming languages?) What important variables did you control, ignore, or measure?
+  Results:
+  What's the answer? Specifically, most good computer architecture papers conclude that something is so many percent faster, cheaper, smaller, or otherwise better than something else. Put the result there, in numbers. Avoid vague, hand-waving results such as "very", "small", or "significant." If you must be vague, you are only given license to do so when you can talk about orders-of-magnitude improvement. There is a tension here in that you should not provide numbers that can be easily misinterpreted, but on the other hand you don't have room for all the caveats.
+  Conclusions:
+  What are the implications of your answer? Is it going to change the world (unlikely), be a significant "win", be a nice hack, or simply serve as a road sign indicating that this path is a waste of time (all of the previous results are useful). Are your results general, potentially generalizable, or specific to a particular case?
+
+  Other Considerations
+
+  An abstract must be a fully self-contained, capsule description of the paper. It can't assume (or attempt to provoke) the reader into flipping through looking for an explanation of what is meant by some vague statement. It must make sense all by itself. Some points to consider include:
+
+  Meet the word count limitation. If your abstract runs too long, either it will be rejected or someone will take a chainsaw to it to get it down to size. Your purposes will be better served by doing the difficult task of cutting yourself, rather than leaving it to someone else who might be more interested in meeting size restrictions than in representing your efforts in the best possible manner. An abstract word limit of 150 to 200 words is common.
+  Any major restrictions or limitations on the results should be stated, if only by using "weasel-words" such as "might", "could", "may", and "seem".
+  Think of a half-dozen search phrases and keywords that people looking for your work might use. Be sure that those exact phrases appear in your abstract, so that they will turn up at the top of a search result listing.
+  Usually the context of a paper is set by the publication it appears in (for example, IEEE Computer magazine's articles are generally about computer technology). But, if your paper appears in a somewhat un-traditional venue, be sure to include in the problem statement the domain or topic area that it is really applicable to.
+  Some publications request "keywords". These have two purposes. They are used to facilitate keyword index searches, which are greatly reduced in importance now that on-line abstract text searching is commonly used. However, they are also used to assign papers to review committees or editors, which can be extremely important to your fate. So make sure that the keywords you pick make assigning your paper to a review category obvious (for example, if there is a list of conference topics, use your chosen topic area as one of the keyword tuples).]
+
+
+Distribution Denial of Service (DDoS) attacks continue to disrupt network services, causing downtime and economic damage. Existing techniques for mitigating this often struggle to #text(fill: red)[whatever they struggle with, find a paper and cite it]. This paper investigates the design of DDoS detection models using machine learning. We evaluate three classifiers, k-Nearest Neighbours (kNN), Logistic Regression (LR), and Random Forests, by analysing their accuracy, false positive rates, and resource usage under controlled conditions. Our results indicate that #text(fill: red)[whatever we find. One sentence about each, what they do well and what they do bad.] These findings suggest that model selection is #text(fill: red)[dependent on hardware specifications and the relative importance of minimising false positives], providing a practical guide for using machine learning-based DDoS detection in diverse contexts.
+
+*Keywords*: DDoS detection, machine learning, false positive rate, k-Nearest Neighbours, Random Forest, Logistic Regression, computational efficiency
+
 = Introduction <sec:intro>
+The proliferation of online services has made networks increasingly vulnerable to Distributed Denial of Service (DDoS) attacks, which can overwhelm servers and disrupt them, causing significant operational downtime and economic damage. Detecting these attacks efficiently is challenging because high accuracy must be balanced with low false positive rates; denying service to legitimate users is highly undesirable, as is allowing too much malicious traffic through. Machine learning offers a promising alternative to traditional, rule-based approaches; patterns in network traffic can be used to identify evolving malicious activity in real time. This document investigates the design of machine learning-based DDoS detection models with an emphasis on maintaining high detection accuracy while reducing false positives, and evaluates their resource usage across a range of hardware to ensure usability for a variety of situations. Specifically, k-Nearest Neighbours (kNN), Logistic Regression (LR), and Random Forest classifiers are compared in terms of both accuracy, false positive rate, and performance.
+
 Blah blah blah. We can quote code `like this`. We can also reference sections like this @sec:intro or even define labels on things like figures and images and reference them later.
 
 Wanna reference something in the bibliography? Just do it with another label @javareentrantlock
@@ -96,14 +140,15 @@ $ T_upright("coarse") = c t f (n) $<eq:coarse>.
 Or even inline $frac(n, 2)$ wowie
 $ T_upright("fine") = op("max") (ceil(frac(c, 2n)) dot t f (n), thick t f (n)) $<eq:fine>.
 
-Figures!
-// #figure(
-//   placement: top,
-//   image("images/1_parallel_scalability.png"),
-//   caption: [Parallel Scalability of our structures for all thread counts and job sizes],
-// ) <fig:parallelscalability>
-// In @fig:parallelscalability we can very clearly see that our experimental data matches the time complexity of access/mutation for our structures.
-Commented out because if there's no image in the directory you put in then it'll fail to compile or have live preview :(
+Figures! They CANNOT be in a super directory, like `../plots`, so we have to use `./images/`
+
+#figure(
+  placement: top,
+  image("images/roc_curve.png"),
+  caption: [It's good practice to put figures at the top of the page and just cite them via label],
+) <fig:parallelscalability>
+
+In @fig:parallelscalability we can very clearly see that our experimental data matches the time complexity of access/mutation for our structures.
 
 Tables too:
 #figure(
