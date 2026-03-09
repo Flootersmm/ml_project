@@ -126,6 +126,26 @@ The report is structured as follows:
 - In @sec:design we consider and justify our design.
 
 = Design <sec:design>
+
+The algorithms in this project were trained on data obtained from kaggle (MAYBE NEED TO LINK HERE??). The data was already mostly balanced between benign traffic and DDoS traffic. The data was also shuffled in the event that some unknown order had been preserved upon creation. Notably though the data is quite large and does not fit into the memory of the hardware of the researchers. For this reason, the project employs a chunking approach, so that the data can be trained upon. The data is read into the models in chunks. Additionally, the entire dataset is not loaded in as it is first perfectly balanced by the researchers. This is done to ensure that the dataset remains balanced, which is important to prevent models from favoring the majority class. This ensures accurate, fair, and reliable predictions across all classes. In this case, 10’000 rows for DDoS and 10’000 rows for benign traffic were used. The features were also modified. the identifying columns and other non-revelvant determined data were all dropped. The dropper columns were as follows: "Label",
+   "Unnamed: 0",
+   "Flow ID",
+   "Src IP",
+   "Dst IP",
+   "Timestamp",
+   "Src Port",
+   "Dst Port",
+were all dropped
+[NEED TO FORMAT THIS STILL]
+
+The protocol was additionally one-hot encoded since it is categorical. The data was also cleaned, where inf values were relaced with NaN. For robustness, outliers were identified through use of the median instead of the mean. In terms of training the models a 60/20/20 split was employed where 60% of the data was used for training, 60% for validation and 20% for testing. 
+Add still: how is correctness evaluated? feature scaling in KNN and LR (not present in RF), hyper param tuning, and maybe eval/feature importances
+
+[W I L L  | F I N I S H  | A N D  | F O R M A T  | S O O N -SAMUEL]
+
+
+
+
 - Bullet points are super easy
 - Like this!
 
