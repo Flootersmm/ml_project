@@ -14,10 +14,16 @@ The algorithms in this project were trained on data obtained from kaggle (MAYBE 
   [`Dst Port`],
 )
 
-The protocol was additionally one-hot encoded since it is categorical. The data was also cleaned, where inf values were relaced with NaN. For robustness, outliers were identified through use of the median instead of the mean. In terms of training the models a 60/20/20 split was employed where 60% of the data was used for training, 60% for validation and 20% for testing. 
+The protocol was additionally one-hot encoded since it is categorical. The data was also cleaned, where inf values were relaced with NaN. For robustness, outliers were identified through use of the median instead of the mean. In terms of training the models, a 60/20/20 split was employed where 60% of the data was used for training, 20% for validation and 20% for testing.
+
+The models that will be evaluated are a k-Nearest Neighbours model, a random forest model, and a logistical regression model. Each of these models has tuned hyperparameters. A variety of possible hyper-parameters are tested, and the best one is chosen by the argmax function on the validation set's accuracy. To make sure that the best hyper-parameters aren't simply overfitting the models will also be benchmarked to determine the extent of over or underfitting.  
+
+The correctness of the models will be evaluated through the accuracy of the model upon the test data. This mainly takes into account the extent to which false positives were minimised while true positives were maximised. The research question scope includes the use of models on low and high powered hardware. Correctness remains the same as previously defined, with the constraint that the models must run in [XXXXXXXX][TIMEFRAME] to qualify as having successfully run on the specified hardware. To evaluate this, the high powered hardware will encompass a modern computer who's computation power is at least X Y Z, and a low-powered computer like a raspberry-pi who's computation power is maximally X Y Z. In place of a physical raspberry-pi, a raspberry-pi emulator will be used. 
 
 
-Add still: how is correctness evaluated? feature scaling in KNN and LR (not present in RF), hyper param tuning, and maybe eval/feature importances. also talk about the overfitting and underfitting. this probably for the eval tho. 
+
+
+Add still: how is correctness evaluated? MORE DETAILED, like precision, recall, ROC/AUC etc. feature scaling in KNN and LR (not present in RF), overfitting analysis details, feature importance for RF and why we do that, threshold tuning in LR only, use of simpleimputed for cleaning, complete hardware XXXX placeholders
 
 
 [W I L L  | F I N I S H  | A N D  | F O R M A T  | S O O N -SAMUEL]
