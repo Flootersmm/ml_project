@@ -123,11 +123,23 @@ Blah blah blah. We can quote code `like this`. We can also reference sections li
 Wanna reference something in the bibliography? Just do it with another label @javareentrantlock
 
 The report is structured as follows:
-- In @sec:design we consider and justify our design.
+- In @sec:related_work we consider existing methods of DDoS detection.
+- In @sec:dataset_preprocessing we discuss the dataset we used and how it was prepared for use in training.
+- In @sec:methodology we explain our classifiers and how we ran our experiments.
+- In @sec:results we show our results.
+- In @sec:discussion we interpret our results and address what they mean.
+- In @sec:conclusion we summarise our findings.
 
-= Design <sec:design>
+= Related Work <sec:related_work>
 #include "sam.typ"
 
+= Dataset and Preprocessing <sec:dataset_preprocessing>
+
+= Methodology <sec:methodology>
+
+= Results <sec:results>
+= Discussion <sec:discussion>
+= Conclusion <sec:conclusion>
 
 
 - Bullet points are super easy
