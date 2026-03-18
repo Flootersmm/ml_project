@@ -222,4 +222,4 @@ __marimo__/
 uv.lock
 
 # models 
-*.pkl
+**.pkl
