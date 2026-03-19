@@ -29,7 +29,11 @@ _Please include this page in your report either at the start or at the end, befo
 
 *Software used* _Describe briefly which software and libraries you relied on. If you built a particular algorithm from scratch, make sure to state it explicitly here._
 
+We used Jupyter, numpy, pandas, matplotlib, and sklearn. Jupyter was used for ease of modifying our program without needing to redo data processing; numpy, pandas, and matplotlib were used for interacting with data and displaying results; sklearn was used for their model implementations.
+
 *Use of AI tools* _If you used tools like ChatGPT or Github Copilot in any phase of the report, please detail here which tools you used, what parts of the work you used them for and how. Note that if you use an AI tool and don't report it, it's considered fraud, so be detailed. Note also that having an AI tool write for you is not allowed. If no AI tools were used, please state that explicitly._
+
+- Conrad: ChatGPT was used to generate the code that created our graphs, specifically the styling.
 
 *Link to code (optional)* _If you would like to share your code, you can link to your repository here._
 
