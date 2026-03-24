@@ -124,7 +124,7 @@ The proliferation of online services has made networks increasingly vulnerable t
 
 Blah blah blah. We can quote code `like this`. We can also reference sections like this @sec:intro or even define labels on things like figures and images and reference them later.
 
-Wanna reference something in the bibliography? Just do it with another label @javareentrantlock
+Wanna reference something in the bibliography? Just do it with another label @github
 
 The report is structured as follows:
 - In @sec:related_work we consider existing methods of DDoS detection.
@@ -137,11 +137,8 @@ The report is structured as follows:
 = Related Work <sec:related_work>
 #include "sam.typ"
 
-= Dataset and Preprocessing <sec:dataset_preprocessing>
 
 = Methodology <sec:methodology>
-
-= Hypotheses  <sec:hypotheses>
 
 = Results <sec:results>
 = Discussion <sec:discussion>
