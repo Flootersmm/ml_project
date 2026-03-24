@@ -35,7 +35,7 @@ We used Jupyter, numpy, pandas, matplotlib, and sklearn. Jupyter was used for ea
 
 - Conrad: ChatGPT was used to generate the code that created our graphs, specifically the styling.
 
-*Link to code (optional)* _If you would like to share your code, you can link to your repository here._
+*Link to code (optional)* https://github.com/Flootersmm/ml_project 
 
 *Group disagreements (optional)* _If there are any disagreements in the group, you may *not* remove a student from the author list without their consent. You should bring disagreements to our attention early. As a last resort, you can describe any grievances here._
 
