@@ -135,7 +135,6 @@ The report is structured as follows:
 - In @sec:conclusion we summarise our findings.
 
 = Related Work <sec:related_work>
-#include "sam.typ"
 
 = Results <sec:results>
 = Discussion <sec:discussion>
@@ -189,4 +188,3 @@ The report is structured as follows:
 
 #include "andi.typ"
 #include "conrad.typ"
-#include "sam.typ"

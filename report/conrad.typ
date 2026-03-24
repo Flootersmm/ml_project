@@ -10,23 +10,23 @@ discuss how you can change this, with k tuning or with weights on the classes th
   placement: top,
   table(
     columns: 4,
-    align: (left, right, right, right),
+    align: (left, left, right, right, right),
     inset: 4pt,
-    table.header([*Model*], [*RAM $Delta$ (MB)*], [*CPU Time (s)*], [*Wall Time (s)*]),
-    [kNN (training)], [2034.49], [10121.29], [1163.05],
-    [kNN (inference)], [60.95], [1402.22], [141.90],
-    [kNN (inference, Raspberry Pi)], [290.60], [5344.74], [1408.22],
-    [Random Forest (training)], [2358.29], [1619.48], [116.39],
-    [Random Forest (inference)], [6.48], [17.46], [7.95],
-    [Random Forest (inference, Raspberry Pi)], [1464.93], [51.85], [65.14],
-    [Logistic Regression (training)], [233.83], [69.41], [42.31],
-    [Logistic Regression (inference)], [36.73], [9.42], [7.42],
-    [Logistic Regression (inference, Raspberry Pi)], [1632.62], [27.53], [30.78],
+    table.header(
+      [*Model*],
+      [*RAM $Delta$ (MB)*],
+      [*CPU Time (s)*],
+      [*Wall Time (s)*],
+    ),
+    [kNN], [2034.49], [10121.29], [1163.05],
+    [RF], [2358.29], [1619.48], [116.39],
+    [LR], [233.83], [69.41], [42.31],
   ),
-  caption: [Resource usage for model training and inference],
-)<fig:resource_usage>
+  caption: [Resource usage for model training, with $200 thin 000$ samples.],
+)<fig:resource_training>
 
 = Related Work stuff
+
 #text(fill: red)[TO MERGE TOGETHER LATER]
 
 Previously, rule-based classifiers were used to detect DDoS attacks @dos_rulebased. This involves the categorisation data with a series of "if ... then ..." rules, generating descriptive models that are easy to interpret. This is an earlier machine learning method than the classifiers explored in this report, and therefore less expressive. Requiring distinct rules that must be carefully considered to provide good coverage and classification makes this kind of model perform poorly in exceptional scenarios. Real-world data is often fuzzy, and preventing DDoS attacks is an arms race - the complexity and upkeep of a rule-based classifier fighting new attacks with evolving signatuers makes them unwieldy. 
@@ -71,5 +71,41 @@ Once the models were  evaluated, we created confusion matrices, ROC curves, and 
 
 Throughout both training and analysis, performance statistics were collected. These were RAM usage, CPU time, and wall clock time. Training was done on a desktop computer equipped with a 12th Gen Intel(R) Core(TM) i7-12700K and 32GiB of DDR5 4800MHz RAM, and inference was ran on both the same desktop computer and a Raspberry Pi 4 with a Quad core Cortex-A72 (ARM v8) 64-bit SoC \@ 1.8GHz and 4GiB of DDR4 3200MHz RAM. This was done to measure performance under limited hardware.
 
+
+= Results (kNN, to merge)
+
+#text(fill: red)[Reference table 1]
+
+Training costs are a one-time expense, but they're relevant when considering that models need to be occasionally retrained as attacks evolve and signatures change. #text(fill: red)[Briefly compare results, it's okay to essentially just rephrase what the table says]. A significant portion of the training time for kNN comes from the 5-fold cross-validation: having to compute the distances between $200 thin 000$ samples is incredibly slow. For larger datasets and more thorough validation, kNN may be completely unrealistic as an option. 
+
+#figure(
+  placement: top,
+  table(
+    columns: 6,
+    align: (left, left, right, right, right, right),
+    inset: 4pt,
+    table.header(
+      [*Model*],
+      [*Hardware*],
+      [*RAM $Delta$ (MB)*],
+      [*Wall Time (s)*],
+      [*Throughput (flows/s)*],
+      [*Latency (ms/flow)*],
+    ),
+    [kNN], [Desktop], [60.95], [141.90], [1409], [0.710],
+    [kNN], [Raspberry Pi 4], [290.61], [1408.23], [142], [7.041],
+    [RF], [Desktop], [6.48], [7.95], [25145], [0.040],
+    [RF], [Raspberry Pi 4], [64.94], [65.15], [3070], [0.326],
+    [LR], [Desktop], [36.73], [7.42], [26943], [0.037],
+    [LR], [Raspberry Pi 4], [68.63], [30.79], [6497], [0.154],
+  ),
+  caption: [Resource usage for model inference across hardware, evaluated on $200 thin 000$ samples.],
+)<fig:resource_inference>
+
+To contextualise @fig:resource_inference: a 1 Gb/s network carrying TCP/UDP traffic generates $5 thin 000 "to" 50 thin 000$ NetFlow records per second. A lightly loaded home or small office router might produce $100 "to" 1 thin 000$ flows/s, while enterprise or data-centre networks can exceed $100 thin 000$ flows/s.
+
+kNN is a clear bottleneck. On the desktop hardware it achieves only $1 thin 409$ flows/s which is equivalent to a home router under a medium load, and on the Raspberry Pi 4 it achieves $142$ flows/s which is catastrophically low and would result in essentially any networy traffic overwhelming the model, causing inference to fail - let alone a DDoS attack. This makes kNN the least efficient model of the 3. The low amount of traffic that it can handle disqualifies it from being useful in any realistic scenario, and its recall on kNN traffic being #text(fill:red)[amount, reference] makes it evident that it has extremely limited usefulness on what traffic it can make decisions on. Further work is needed to refine the kNN model, #text(fill:red)[refer to the 3 papers, proably the one using limited feature amounts], in order for it to become usable for DDoS traffic classification. 
+
+#text(fill:red)[LR and RF saturate 1 Gb/s network, but there's also 2.5, 5, and 10 Gb/s networks iirc. flow/s increases linearly so figure out what we can reach, where it's used, and how useful that is. Latency is no issue for any of our models, web requests are 100ms and games are like 10ms best case.]
 
 
