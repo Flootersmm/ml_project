@@ -32,8 +32,18 @@ reference here asdasd @dos_rulebased
 
 = Dataset and Preprocessing <sec:dataset_preprocessing>
 
-Our models were trained on a dataset consisting of network traffic, balanced between DDoS traffic and benign traffic. The data was extracted from public IDS datasets, produced in different years and with different techniques of generating traffic. There are $12 thin 794 thin 627$ datapoints and $84$ features. We then tested our models' inference abilities on an identically formed dataset that was unbalanced, with 20% DDoS traffic and 80% benign. 
+Three models were trained on a dataset consisting of network traffic, balanced between DDoS traffic and benign traffic. These models were kNN, logistic regression, and random forest. The data was extracted from public IDS datasets, produced in different years and with different techniques of generating traffic. There are $12 thin 794 thin 627$ datapoints and $84$ features. The models' inference abilities were then tested on an identically formed dataset that was unbalanced, with 20% DDoS traffic and 80% benign. Implementation of each model was provided by the `sklearn` library for Python. 
 
-In order to manage resource and time constraints, we limited our training and inference to $200 thin 000$ labels. This data was then put into a `pandas` dataframe for efficiency and ease of management. We then dropped particular features that were either irrelevant or non-numeric - both kNN and logistic regression require numeric features. An alternative way of tackling our non-numeric features 
+In order to manage resource and time constraints, training and inference were limited to $200 thin 000$ labels. This data was then put into a `pandas` dataframe for efficiency and ease of management. Particular features that were either irrelevant or non-numeric were also dropped - both kNN and logistic regression require numeric features. An alternative way of tackling non-numeric features is to one-hot encode them, where categoric features are given an integer identifier. This massively increases the memory requirements of the model and was therefore decided against, with the exception of encoding the `Protocol` feature which was the only relevant categorical feature present. This resulted in $79$ features.
 
-Preprocessing can be viewed in detail at @github.
+The next step was cleaning; all features were represented with a 64-bit float and invalid numbers were cast to NaN for predictable management.
+
+Next, the dataset was split into $60%$ training, $20%$ validation, and $20%$ test data. The training set was used for fit the model parameters, and was the largest to allow the models to effectively capture patterns in the data. The validation set was used for hyperparameter tuning; as the models haven't encountered the data before this is a suitable playground for adjustment. The final test set allows finalisation of ideal hyperparameters, and an additional verification that they are indeed ideal without any bias. 
+
+Finally, features were then scaled with a mean of 0 and a standard deviation of 1, which is z-score normalisation. This is because logistic regression is sensitive to feature magnitude as it uses gradient descent which can struggle when, for example, one feature takes values $[0,1]$ and another takes $[2^32, 2^64]$. This prevents particular features completely dominating calculations and having inflated importance. It also allows faster convergence to the gradient's local minima. This scaler was applied to the training data, and then used to transform all data to make it homogeneous for the models. This is the last step to prepare the data. 
+
+Preprocessing steps can be viewed in detail at our codebase's git repository @github, as well as any exact implementation details mentioned hereafter.
+
+= Methodolgy <sec:methodology> 
+
+One model evaluated was kNN. This works by finding the $k$-nearest points in the training dataset and uses their class to predict the class of nearby datapoints. For 79 features, the feature space has a dimensionality of $bb(R)^79$ which makes visualisation challenging, but the idea of 'nearby datapoints' generlises to high-dimension Euclidean spaces and therefore kNN is perfectly usable, though potentially slow. #text(fill: red)[REPHRASE, CITE, OR REFERENCE HYPOTHESIS] 
