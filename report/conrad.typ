@@ -29,3 +29,9 @@ discuss how you can change this, with k tuning or with weights on the classes th
 reference here asdasd @dos_rulebased
 @dos_knn 
 @dos_knn_realtime
+
+= Dataset and Preprocessing <sec:dataset_preprocessing>
+
+Our models were trained on a dataset consisting of network traffic, balanced between DDoS traffic and benign traffic. The data was extracted from public IDS datasets, produced in different years and with different techniques of generating traffic. There are $12 thin 794 thin 627$ datapoints and $84$ features. We then tested our models' inference abilities on an identically formed dataset that was unbalanced, with 20% DDoS traffic and 80% benign. 
+
+In order to manage resource and time constraints, we limited our training and inference to $200 thin 000$ labels. This data was then put into a `pandas` dataframe for efficiency and ease of management. We then dropped particular features that were either irrelevant or non-numeric - both kNN and logistic regression require numeric features. An alternative way of tackling our non-numeric features 
