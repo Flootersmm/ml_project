@@ -7,4 +7,6 @@ We expect that kNN will perform well because benign data clusters naturally, i.e
 3. kNN
 Over all, we expect the random forest model to outperform the other two when accounting for speed and accuracy.
 
-hypothesis now: Hypothesis (not edited, reviewed, accurate subject to alteration of H)
+hypothesis now: Which machine learning approaches best minimise false positive rates while maintaining high detection accuracy for DDoS detection across varying hardware constraints?
+
+(not edited, reviewed, accurate subject to alteration of H)
