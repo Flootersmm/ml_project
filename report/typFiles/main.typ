@@ -141,6 +141,8 @@ The report is structured as follows:
 
 = Methodology <sec:methodology>
 
+= Hypotheses  <sec:hypotheses>
+
 = Results <sec:results>
 = Discussion <sec:discussion>
 = Conclusion <sec:conclusion>
