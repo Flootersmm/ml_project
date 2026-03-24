@@ -1,3 +1,5 @@
+#import "@preview/charged-ieee:0.1.4": ieee
+
 knn does worse on imbalanced because the larger group sizes 'pull' knn into them
 
 find a paper about this
@@ -23,3 +25,7 @@ discuss how you can change this, with k tuning or with weights on the classes th
   ),
   caption: [Resource usage for model training and inference],
 )<fig:resource_usage>
+
+reference here asdasd @dos_rulebased
+@dos_knn 
+@dos_knn_realtime
