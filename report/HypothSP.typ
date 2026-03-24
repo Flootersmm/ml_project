@@ -6,3 +6,5 @@ We expect that kNN will perform well because benign data clusters naturally, i.e
 2. RF
 3. kNN
 Over all, we expect the random forest model to outperform the other two when accounting for speed and accuracy.
+
+hypothesis now: Hypothesis (not edited, reviewed, accurate subject to alteration of H)
