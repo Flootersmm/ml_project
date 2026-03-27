@@ -277,10 +277,6 @@ Evaluated against the balanced dataset, the kNN model with a hyperparameter of $
 
 To assess the viability of kNN in a real-world scenario, inference was performed on a dataset with 80% benign traffic and 20% DDoS, with $200 thin 000$ samples. This is a much more difficult scenario, as there is significantly less DDoS traffic to train on. The inference confusion matrix (@fig:knn_confusion_infer) shows a degradation in DDoS recall with this unbalanced dataset. Of $200 thin 000$ samples, only $63 thin 993$ were correctly identified, yielding a DDoS recall of $32.0%$, a huge collapse when compared to the balanced dataset. This disparity comes from the distribution of data in our feature space - with a decision boundary created for balanced probability, a large amount of DDoS traffic samples are in regions dominated by benign traffic samples, creating many false negatives. The near-zero false positive rate confirms that the model can identify DDoS traffic that's representative, but fails when it's more similar to benign traffic.
 
-#text(
-  fill: red,
-)[LR and RF saturate 1 Gb/s network, but there's also 2.5, 5, and 10 Gb/s networks iirc. flow/s increases linearly so figure out what we can reach, where it's used, and how useful that is. Latency is no issue for any of our models, web requests are 100ms and games are like 10ms best case.]
-
 == Logistic Regression
 
 The results show when $C$ is too small it leads to underfitting, reducing both training and validation accuracy. When increasing $C$, the performance improves until it reaches $C approx 0.046$. From then on, increasing $C$ any further has practically no effect to the performance. The overfitting gap remains almost zero across all values, indicating that the model generalises well and does not overfit.
@@ -291,7 +287,7 @@ While regularisation has little influence, the classification does have a strong
 
 Increasing the threshold makes the classifier more conservative. This means that fewer flows are classified as DDoS, which reduces the FPR and increases precision, but lowers recall. In reverse, the advantage lowering the threshold is that it maximizes the number of detections, but the trade-off is that it also increases false positives.
 
-For example, at threshold $0.5$, the model achieves FPR $approx 0.028$ and recall $approx 0.9995$. If the threshold is increased to $0.9$, it reduces the FPR to approximately $0.015$, however the recall drops to around $0.9588$. This clearly shows the trade-off between how sensitive the detetction is and the false alarm rate.
+For example, at threshold $0.5$, the model achieves FPR $approx 0.028$ and recall $approx 0.9995$. If the threshold is increased to $0.9$, it reduces the FPR to approximately $0.015$, however the recall drops to around $0.9588$. This clearly shows the trade-off between how sensitive the detection is and the false alarm rate.
 
 #figure(
   image("images/lr/lr_threshold_sweep.png"),
