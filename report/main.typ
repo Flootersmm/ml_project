@@ -213,8 +213,6 @@ Throughout both training and analysis, performance statistics were collected. Th
   caption: [Resource usage for model training, with $200 thin 000$ samples.],
 )<fig:resource_training>
 
-#text(fill: red)[Reference table 1]
-
 Training costs are a one-time expense, but they're relevant when considering that models need to be occasionally retrained as attacks evolve and signatures change. As shown in @fig:resource_training, LR is by far the cheapest to train, using only $233.83$ MB of RAM and completing in 42 seconds of wall time. RF is significantly more expensive but still tractable at 116 seconds. kNN is the most costly by a wide margin, consuming over 2 GB of RAM and taking nearly 20 minutes of wall time. A significant portion of the training time for kNN comes from the 5-fold cross-validation: having to compute the distances between $200 thin 000$ samples is incredibly slow. For larger datasets and more thorough validation, kNN may be completely unrealistic as an option.
 
 #figure(
