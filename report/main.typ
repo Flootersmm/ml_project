@@ -336,6 +336,8 @@ A limitation of this evaluation is that the dataset is explicitly balanced and h
 
 = Conclusion <sec:conclusion>
 
+kNN proves unsuitable for practical DDoS detection as implemented in this report. While it does achieve near-perfect accuracy of $99.7%$ on the balanced dataset, this does not generalise to realistic conditions where traffic is unbalanced: DDoS recall collapses to $32.0%$, confirming that overfitting occurred. Its inference throughput of $1 thin 409$ flows/s on desktop hardware and just $142$ flows/s on the Raspberry Pi 4 further disqualify it from being used in any real scenario, as even a lightly loaded home router would overwhelm it. The primary issue is the cost of distance computation in the high-dimensional feature space that was used. With 79 features and $200 thin 000$ samples, both training and inference are prohibitively slow. Future work should investigate reducing the feature space as in @dos_knn, or applying class-weighted voting to address the imbalance sensitivity, rather than letting the majority class crowd out the minority class.
+
 Logistic regression provides a strong, stable, and interpretable baseline for DDoS detection on this dataset.
 
 First, performance is largely insensitive to the regularisation parameter once the model is no longer under-constrained, and no significant overfitting is observed. Second, the classification threshold has a much larger effect on the trade-off between false positives and recall, making it the primary tuning mechanism for deployment. Third, coefficient analysis shows that the model relies on meaningful traffic features such as TCP flags, protocol indicators, and flow-level statistics.
