@@ -141,8 +141,21 @@ While kNN does work well in many cases, it's downside is that it relies on heavy
 
 Even if we are aware that LR might not deliver the best results out of all the models, it is still worth including, as its trade-off between performance and resource consumption is attractive and there are ways to maximise results. Research shows that LR can be improved significantly with careful preprocessing, such as feature selection and balanced data @chalichalamala2023lrec. This means that LR's effectiveness depends on how the data is set up just as much as it does on how complex the model itself is. One study that focuses on using LR in deployment emphasises that can be scaled further through techniques like parallelised training and automated hyperparameter tuning, allowing for competitive performance while keeping computational overead low @kolukisa2024efficient.
 
-This means that LR is not just a popular baseline, but is especially a lightweight and effective model that using the right approach can be tuned to successfully handle the trade-offs between accuracy, falso positive rate and computational efficiency.
-#text(fill: red)[RF papers here please!!!]
+This means that LR is not just a popular baseline, but is especially a lightweight and effective model that using the right approach can be tuned to successfully handle the trade-offs between accuracy, false positive rate and computational efficiency.
+
+However, with changing attack patterns and a variety of new and innovative attacks compounding upon IoT devices, it makes sense to also investigate the random forests model use in computation. Due it's lightweightness and robustness with ensembling methods @xie2023ddos it is quite suitable for use in classifying IoT traffic. Additionally, with the importance of classifcation reliability as well as real-time clasification, the random forest model has outperformed other models while simultaneously avoiding overfitting @prashanthi2023machine. Additionally, research shows that the forest model can reach very high scores as high as 99.88% accuracy, 99.93% precision and 99.81% recall @nawaz2025lightweight while still maintaning low computational overhead and remaining suitable for the resource-constrained IoT deployments that will be outlined further in this paper. This suggests that it could handle the tradeoffs better than other models as it is able to provide a more comprehensive classification while simultaneously staying far below the computational overheads of other equally accurate models.
+
+= Hypothesis <sec:hypothesis>
+The research question focuses on designing a DDoS detecion model to minimise false positive rates while maintaining high detection accuracy on both low and high powered hardware. With respect to this, our first hypohesis is that the random forest model and the kNN model will outperform linear regression in the minimisation of false-positive rates (FPR). This stems form the fact that network traffic paterns are inherently non-linear given occurences such as burst behaviours, temporal correlations and other protoco-specific signatures that don't subscribe to a linear formatting. Additionally, the interaction of different features is extremely impotant. This encompasses combinations such as packet rates and payload sizes or duration of and number of failed handshakes. We expect linear regression will struggle to capture precise decision boundaries due to the multi-faceted aspect of the data, thereby yielding a higher FPR than RF and kNN. 
+We expect that kNN will perform well because benign data clusters naturally, i.e. normal user behaviour is repetitive. However, the extent of the diversity of the attack variants may complicate the clustering. We do not expect kNN to perform best, as we expect a variety of different attack formats given the dataset samples a multitude of other dates Therefore, we hypothesise that the random forest model will outperform kNN (and LR) in terms of accuracy. Aditionally, we also expect the kNN model to underperform RF and LR in terms of computational speed. kNN is a lazy algorithm and therefore the training dataset will take up a very significant portion of the embedded devices limited memory, as well as needing to recan the entire dataset anew when new data arrives. We hypothesise that linear regression will run fastest given that it is a very simple model. We expect the order to be 
+1. LR
+2. RF
+3. kNN
+Over all, we expect the random forest model to outperform the other two when accounting for speed and accuracy.
+
+hypothesis now: Which machine learning approaches best minimise false positive rates while maintaining high detection accuracy for DDoS detection across varying hardware constraints?
+
+(not edited, reviewed, accurate subject to alteration of H)
 
 = Dataset and Preprocessing <sec:dataset_preprocessing>
 
@@ -340,6 +353,8 @@ A limitation of this evaluation is that the dataset is explicitly balanced and h
 
 
 == Random Forest
+
+#text(fill: red)[Random forest results to be added]
 
 = Conclusion <sec:conclusion>
 
