@@ -348,7 +348,30 @@ A limitation of this evaluation is that the dataset is explicitly balanced and h
 
 == Random Forest
 
-#text(fill: red)[Random forest results to be added]
+The random forest also allowed us to view the most important features.
+#figure(
+  image("images/rf/rfFeatureImpor.png"),
+  caption: [Top 20 feature importances for Random Forest (n=50)],
+) 
+The features that appeared the most were as follows
+- `Fwd seg size min`
+- `Init Bwd Win Bytes`
+- `Init Fwd Win Bytes`
+- `Bwd Header Len`
+- `SYN Flag Cnt`
+
+Noticeably they are different from the logisitcal regression important features. Given that the random forest model scored a higher accuracy than the LR, we can assume that it's lack of pure linearity allowed it to gain further insights that aren't possible in a fully linear decision boundary model.
+#figure(
+  image("images/rf/rf_confusion_matrix.png"),
+  caption: [Ranfom Forest Confusion Matrix]
+)
+We can see this also in the confusion matrix. There are noticably very view incorrect predictions and a very high true positive and false negative rate. Additionally it is also interesting to notice that despite this extremely high accuracy rate the overfitting analysis indicates that the overfitting remained low. While the training accuracy is larger than the validation accuracy, it is only higher by 0.00125. 
+#figure(
+  image("images/rf/rf_hyperparameter_tuning.png"),
+  caption:[Random Forest Hyperparamter tuning and Overfitting]
+)
+The hyperparameter tuning therefore functioned as expected, and overfitting remained low while validation accuracy remained high. 
+
 
 = Conclusion <sec:conclusion>
 
