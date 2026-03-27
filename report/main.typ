@@ -24,7 +24,7 @@ _Please include this page in your report either at the start or at the end, befo
   table.hline(),
   [Conrad Clough], [2699315],
   [Samuel Power], [2800107],
-  [ANDI FILL THIS OUT :)], [THIS TOOOOO],
+  [Andreas Stolle], [2808634],
 )
 
 *Software used* _Describe briefly which software and libraries you relied on. If you built a particular algorithm from scratch, make sure to state it explicitly here._
@@ -64,10 +64,10 @@ We used Jupyter, numpy, pandas, matplotlib, and sklearn. Jupyter was used for ea
       email: "s.j.power@student.vu.nl",
     ),
     (
-      name: "mr. andy",
-      department: [VUNetId: x],
-      organization: [Student Nr: x],
-      email: "lovelyman@student.vu.nl",
+      name: "Andreas Stolle",
+      department: [VUNetId: ast451],
+      organization: [Student Nr: 2808634],
+      email: "a.stolle@student.vu.nl",
     ),
   ),
   index-terms: (
@@ -137,6 +137,11 @@ There are many ways to use kNN, and one notable study reduces the feature space 
 
 Other papers have investigated the usage of a kNN model to tackle DDoS attacks in real-time. It's correctly pointed out in @dos_knn_realtime that machine learning is a rapidly developing field, and therefore repeated investigation into model performance is important and relevant to consider. The author expressed interest in investigating the computational resource requirements for this real-time protection; resource-constrained IoT environments were less performant than desired and required further optimisation to reach a high level of effectiveness.
 
+Although kNN performs well in many settings, its reliance on distance computations over the training set make it less suitable for resource-constrained environments. To investigate whether a lighter model can achieve similar or better performance, we consider Logistic Regression next, which is commonly used in network intrusion detection as lightweight baseline model. Boadi shows in his analysis that LR achieves competitive results for accuracy and AUC, although it is often outperformed by more complex models like Random Forest @boadi2025nslkdd.
+
+Still, LR is attractive due to its simplicity and efficiency, particularly when low computational cost is important. Prior work shows that the performance can be improved through careful preprocessing, such as feature selection and data balancing @chalichalamala2023lrec. This suggests that much of LR's effectivenes depends on how the data is represented, rather than on the model complexity alone. In addition, studies that focus on deployment, highlight that LR can be scaled through techniques such as parallelized training and automated hyperparameter tuning, allowing a competitive performance while keeping computational overhead low @kolukisa2024efficient.
+
+These findings indicate that aside from being a popular baseline, LR is a flexible model whose performance can be tuned to handle trade-offs between accuracy, falso positive rate, and computational efficiency.
 #text(fill: red)[LR and RF papers here please!!!]
 
 = Dataset and Preprocessing <sec:dataset_preprocessing>
