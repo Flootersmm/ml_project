@@ -35,7 +35,7 @@ We used Jupyter, numpy, pandas, matplotlib, and sklearn. Jupyter was used for ea
 
 - Conrad: ChatGPT was used to generate the code that created our graphs, specifically the styling.
 
-*Link to code (optional)* https://github.com/Flootersmm/ml_project 
+*Link to code (optional)* https://github.com/Flootersmm/ml_project
 
 *Group disagreements (optional)* _If there are any disagreements in the group, you may *not* remove a student from the author list without their consent. You should bring disagreements to our attention early. As a last resort, you can describe any grievances here._
 
@@ -115,76 +115,236 @@ We used Jupyter, numpy, pandas, matplotlib, and sklearn. Jupyter was used for ea
 //   Some publications request "keywords". These have two purposes. They are used to facilitate keyword index searches, which are greatly reduced in importance now that on-line abstract text searching is commonly used. However, they are also used to assign papers to review committees or editors, which can be extremely important to your fate. So make sure that the keywords you pick make assigning your paper to a review category obvious (for example, if there is a list of conference topics, use your chosen topic area as one of the keyword tuples).]
 //
 
-Distributed Denial of Service (DDoS) attacks continue to disrupt network services, causing downtime and economic damage. Existing techniques for mitigating this often struggle to #text(fill: red)[whatever they struggle with, find a paper and cite it]. This paper investigates the design of DDoS detection models using machine learning. We evaluate three classifiers, k-Nearest Neighbours (kNN), Logistic Regression (LR), and Random Forests, by analysing their accuracy, false positive rates, and resource usage under controlled conditions. Our results indicate that #text(fill: red)[whatever we find. One sentence about each, what they do well and what they do bad.] These findings suggest that model selection is #text(fill: red)[dependent on hardware specifications and the relative importance of minimising false positives], providing a practical guide for using machine learning-based DDoS detection in diverse contexts.
+Distributed Denial of Service (DDoS) attacks continue to disrupt network services, causing downtime and economic damage. Existing techniques for mitigating this often struggle to deal with evolving attack signatures @dos_rulebased. This paper investigates the design of DDoS detection models using machine learning. We evaluate three classifiers, k-Nearest Neighbours (kNN), Logistic Regression (LR), and Random Forests, by analysing their accuracy, false positive rates, and resource usage under controlled conditions. Our results indicate that kNN is too simple of a model to efficiently classify attacks, RF is significantly faster and very usable in all levels of hardware but slow to train, and LR beats the previous two models in every meaningful way. These findings suggest that model selection is dependent on hardware specifications and the relative importance of minimising false positives,  providing a practical guide for using machine learning-based DDoS detection in diverse contexts, but future work should be done to identify areas where LR may perform suboptimally.
 
 *Keywords*: DDoS detection, machine learning, false positive rate, k-Nearest Neighbours, Random Forest, Logistic Regression, computational efficiency
 
 = Introduction <sec:intro>
 The proliferation of online services has made networks increasingly vulnerable to Distributed Denial of Service (DDoS) attacks, which can overwhelm servers and disrupt them, causing significant operational downtime and economic damage. Detecting these attacks efficiently is challenging because high accuracy must be balanced with low false positive rates; denying service to legitimate users is highly undesirable, as is allowing too much malicious traffic through. Machine learning offers a promising alternative to traditional, rule-based approaches; patterns in network traffic can be used to identify evolving malicious activity in real time. This document investigates the design of machine learning-based DDoS detection models with an emphasis on maintaining high detection accuracy while reducing false positives, and evaluates their resource usage across a range of hardware to ensure usability for a variety of situations. Specifically, k-Nearest Neighbours (kNN), Logistic Regression (LR), and Random Forest classifiers are compared in terms of both accuracy, false positive rate, and performance.
 
-Blah blah blah. We can quote code `like this`. We can also reference sections like this @sec:intro or even define labels on things like figures and images and reference them later.
-
-Wanna reference something in the bibliography? Just do it with another label @github
-
 The report is structured as follows:
 - In @sec:related_work we consider existing methods of DDoS detection.
 - In @sec:dataset_preprocessing we discuss the dataset we used and how it was prepared for use in training.
 - In @sec:methodology we explain our classifiers and how we ran our experiments.
-- In @sec:results we show our results.
-- In @sec:discussion we interpret our results and address what they mean.
+- In @sec:results we show and discuss our results.
 - In @sec:conclusion we summarise our findings.
 
 = Related Work <sec:related_work>
 
+Previously, rule-based classifiers were used to detect DDoS attacks @dos_rulebased. This involves the categorisation data with a series of "if ... then ..." rules, generating descriptive models that are easy to interpret. This is an earlier machine learning method than the classifiers explored in this report, and therefore less expressive. Requiring distinct rules that must be carefully considered to provide good coverage and classification makes this kind of model perform poorly in exceptional scenarios. Real-world data is often fuzzy, and preventing DDoS attacks is an arms race - the complexity and upkeep of a rule-based classifier fighting new attacks with evolving signatuers makes them unwieldy.
+
+There are many ways to use kNN, and one notable study reduces the feature space drastically to only four features @dos_knn. In constrast, this report applies kNn to all numeric features available in the dataset, a total of 79, to evaluate whether broader feature coverage improves performance or not.
+
+Other papers have investigated the usage of a kNN model to tackle DDoS attacks in real-time. It's correctly pointed out in @dos_knn_realtime that machine learning is a rapidly developing field, and therefore repeated investigation into model performance is important and relevant to consider. The author expressed interest in investigating the computational resource requirements for this real-time protection; resource-constrained IoT environments were less performant than desired and required further optimisation to reach a high level of effectiveness.
+
+#text(fill: red)[LR and RF papers here please!!!]
+
+= Dataset and Preprocessing <sec:dataset_preprocessing>
+
+Three models were trained on a dataset consisting of network traffic, balanced between DDoS traffic and benign traffic. These models were kNN, logistic regression, and random forest. The data was extracted from public IDS datasets, produced in different years and with different techniques of generating traffic. There are $12 thin 794 thin 627$ datapoints and $84$ features. The models' inference abilities were then tested on an identically formed dataset that was unbalanced, with 20% DDoS traffic and 80% benign. Implementation of each model was provided by the `sklearn` library for Python.
+
+In order to manage resource and time constraints, training and inference were limited to $200 thin 000$ labels. This data was then put into a `pandas` dataframe for efficiency and ease of management. Particular features that were either irrelevant or non-numeric were also dropped - both kNN and logistic regression require numeric features. An alternative way of tackling non-numeric features is to one-hot encode them, where categoric features are given an integer identifier. This massively increases the memory requirements of the model and was therefore decided against, with the exception of encoding the `Protocol` feature which was the only relevant categorical feature present. This resulted in $79$ features.
+
+The next step was cleaning; all features were represented with a 64-bit float, invalid numbers were cast to NaN for predictable management, and missing values were imputed using the median.
+
+Next, the dataset was split into $60%$ training, $20%$ validation, and $20%$ test data. The training set was used for fit the model parameters, and was the largest to allow the models to effectively capture patterns in the data. The validation set was used for hyperparameter tuning; as the models haven't encountered the data before this is a suitable playground for adjustment. The final test set allows finalisation of ideal hyperparameters, and an additional verification that they are indeed ideal without any bias.
+
+Finally, features were then scaled with a mean of 0 and a standard deviation of 1, which is z-score normalisation. This is because logistic regression is sensitive to feature magnitude as it uses gradient descent which can struggle when, for example, one feature takes values $[0,1]$ and another takes $[2^32, 2^64]$. This prevents particular features completely dominating calculations and having inflated importance. It also allows faster convergence to the gradient's local minima. An alternative, explored in @dos_knn, is to hugely reduce the feature space - this was opted against this as makes a comparison between kNN and other models less direct. This scaler was applied to the training data, and then used to transform all data to make it homogeneous for the models. This is the last step to prepare the data.
+
+Exact implementation details can be viewed at the codebase's git repository @github.
+
+= Methodology <sec:methodology>
+
+#figure(
+  placement: top,
+  image("images/knn/hyperparameter_tuning.png"),
+  caption: [Tuning hyperparameters for kNN for accuracy. $k = 1$ provides the best balance between accuracy and overfitting.],
+) <fig:knn_hyperparameter>
+
+== kNN
+
+The first model evaluated was kNN. This works by finding the $k$-nearest points in the training dataset and uses their class to predict the class of nearby datapoints. For 79 features, the feature space has a dimensionality of $bb(R)^79$ which makes visualisation challenging, but the idea of 'nearby datapoints' generalises to high-dimension Euclidean spaces and therefore kNN is perfectly usable, though slow (@fig:resource_training). Varying hyperparameters $k$ were tested to maximise accuracy and minimise overfitting, see @fig:knn_hyperparameter. Larger $k$ can lead to overfitting and smaller $k$ can lead to underfitting, so finding the balance was important.
+
+After the optimal hyperparemter $k$ was chosen, 5-fold cross-validation was used, wherein the validation and training sets were combined and split into 5 sections. This allows for addressing the tradeoff between bias and variance, finding a model that maximises the benefit gained for the best inference results. Finally, the model was trained and then evaluated a single time on the test data. Using the test data a single time to evaluate final performance is extremely important to prevent provide an independent analysis of the model's performance - repeated use of the test data means this is no longer an evaluation on unseen data and therefore valueless.
+
+== Logistic Regression
+
+For the logistic regression model, with an input feature vector $x$, it estimates the probability of the DDoS class as
+
+$
+  P(y = 1 | x) = sigma(w^T x + b),
+$
+
+where $w$ is the coefficient vector, $b$ is the bias term, and $sigma(.)$ is the sigmoid function. Classification is obtained by thresholding this probability.
+
+To study the sensitivity of logistic regression to L2 regularisation and to reduce overfitting, we evaluate $C$ over a logarithmic range from $10^(-4)$ to $10^4$. For each value of $C$, we measure training accuracy, validation accuracy, and the overfitting gap.
+
+
+#figure(
+  image("images/lr/lr_hyperparameter_tuning_overfitting.png"),
+  caption: [Effect of the inverse regularisation parameter $C$ on performance. Accuracy improves sharply at low $C$ and quickly plateaus, while the overfitting gap remains negligible.],
+)
+
+The best validation performance is achieved at $C ≈ 0.046$, with validation accuracy of approximately 0.9855.
+
+== Random Forest
+
+#text(fill: red)[Random forest specific stuff]
+
+Once the models were evaluated, confusion matrices, ROC curves, and computed AUC scores were computed for each of them. The models themselves were also saved to later be used for inference. This inference was performed with identical dataset preprocessing on the unbalanced dataset. Confusion matrices, ROC curves, and AUC scores were also computed for the inference run, and only one run was performed per model as the results are deterministic.
+
+Throughout both training and analysis, performance statistics were collected. These were RAM usage, CPU time, and wall clock time. Training was done on a desktop computer equipped with a 12th Gen Intel(R) Core(TM) i7-12700K and 32GiB of DDR5 4800MHz RAM, and inference was ran on both the same desktop computer and a Raspberry Pi 4 with a Quad core Cortex-A72 (ARM v8) 64-bit SoC \@ 1.8GHz and 4GiB of DDR4 3200MHz RAM. This was done to measure performance under limited hardware.
+
 = Results <sec:results>
-= Discussion <sec:discussion>
+
+== kNN
+
+#figure(
+  placement: top,
+  table(
+    columns: 4,
+    align: (left, left, right, right),
+    inset: 4pt,
+    table.header([*Model*], [*RAM $Delta$ (MB)*], [*CPU Time (s)*], [*Wall Time (s)*]),
+    [kNN], [2034.49], [10121.29], [1163.05],
+    [RF], [2358.29], [1619.48], [116.39],
+    [LR], [233.83], [69.41], [42.31],
+  ),
+  caption: [Resource usage for model training, with $200 thin 000$ samples.],
+)<fig:resource_training>
+
+#text(fill: red)[Reference table 1]
+
+Training costs are a one-time expense, but they're relevant when considering that models need to be occasionally retrained as attacks evolve and signatures change. As shown in @fig:resource_training, LR is by far the cheapest to train, using only $233.83$ MB of RAM and completing in 42 seconds of wall time. RF is significantly more expensive but still tractable at 116 seconds. kNN is the most costly by a wide margin, consuming over 2 GB of RAM and taking nearly 20 minutes of wall time. A significant portion of the training time for kNN comes from the 5-fold cross-validation: having to compute the distances between $200 thin 000$ samples is incredibly slow. For larger datasets and more thorough validation, kNN may be completely unrealistic as an option.
+
+#figure(
+  placement: top,
+  table(
+    columns: 6,
+    align: (left, left, right, right, right, right),
+    inset: 4pt,
+    table.header(
+      [*Model*], [*Hardware*], [*RAM $Delta$ (MB)*], [*Wall Time (s)*], [*Throughput (flows/s)*], [*Latency (ms/flow)*]
+    ),
+    [kNN], [Desktop], [60.95], [141.90], [1409], [0.710],
+    [kNN], [Raspberry Pi 4], [290.61], [1408.23], [142], [7.041],
+    [RF], [Desktop], [6.48], [7.95], [25145], [0.040],
+    [RF], [Raspberry Pi 4], [64.94], [65.15], [3070], [0.326],
+    [LR], [Desktop], [36.73], [7.42], [26943], [0.037],
+    [LR], [Raspberry Pi 4], [68.63], [30.79], [6497], [0.154],
+  ),
+  caption: [Resource usage for model inference across hardware, evaluated on $200 thin 000$ samples.],
+)<fig:resource_inference>
+
+#figure(
+  placement: top,
+  image("images/knn/confusion_matrix.png"),
+  caption: [Confusion matrix for kNN during training, seeing very high recall.],
+) <fig:knn_confusion>
+
+#figure(
+  placement: top,
+  image("images/knn/inference_confusion_matrix.png"),
+  caption: [Confusion matrix for kNN during inference, seeing a high false negative rate.],
+) <fig:knn_confusion_infer>
+
+#figure(
+  placement: top,
+  image("images/knn/roc_curve.png"),
+  caption: [ROC curve for kNN on the balanced test set, with a AUC of $0.9970$.],
+) <fig:knn_roc>
+
+
+
+To contextualise @fig:resource_inference: a 1 Gb/s network carrying TCP/UDP traffic generates $5 thin 000 "to" 50 thin 000$ NetFlow records per second. A lightly loaded home or small office router might produce $100 "to" 1 thin 000$ flows/s, while enterprise or data-centre networks can exceed $100 thin 000$ flows/s.
+
+kNN is a clear bottleneck. On the desktop hardware it achieves only $1 thin 409$ flows/s which is equivalent to a home router under a medium load, and on the Raspberry Pi 4 it achieves $142$ flows/s which is catastrophically low and would result in essentially any networy traffic overwhelming the model, causing inference to fail - let alone a DDoS attack. This makes kNN the least efficient model of the three. The low amount of traffic that it can handle disqualifies it from being useful in any realistic scenario, and its low recall on DDoS traffic makes it evident that it has extremely limited usefulness on what traffic it can make decisions on. Further work is needed to refine the kNN model: reducing the feature space, as explored in @dos_knn, is a promising direction to take as their approach achieved competitive performance with only four features which would substantially reduce runtime.
+
+#text(
+  fill: red,
+)[LR and RF saturate 1 Gb/s network, but there's also 2.5, 5, and 10 Gb/s networks iirc. flow/s increases linearly so figure out what we can reach, where it's used, and how useful that is. Latency is no issue for any of our models, web requests are 100ms and games are like 10ms best case.]
+
+Prior to finalising the model training, hyperparameters were evaluated from 1 to 50. This hyperparameter $k$ represents the number of neighbours that kNN uses. As shown in #text(fill: red)[figure], both training and validation accuracy are the highest for $k = 1$ ($approx 99.7%$ for both), and decline as $k$ increases. This is a worrisome result that looks like extreme overfitting on the training set, however both LR and RF had similar results. Therefore, it's possible that the balanced dataset represents a genuinely simple problem to solve and that DDoS traffic is distinct enough from benign traffic for it to be trivial to tell them apart. Unfortunately, the collapse in kNN's recall for the unbalanced dataset (#text(fill: red)[recall amount]) signifies definitively that overfitting did occur, as it to perform on new data and has therefore cannot sufficiently classify realistic, unbalanced traffic. #text(fill: red)[future work to prevent this]
+
+Evaluated against the balanced dataset, the kNN model with a hyperparameter of $k = 1$ achievees near perfect recall. The training/validation confusion matrix (@fig:knn_confusion) shows shows $3 thin 988$ correct classifications and just 12 misclassifications, yielding an accuracy of $99.7%$ and equal recall of $99.7%$ for both classes. The corresponding ROC curve (@fig:knn_roc) achieves an AUC of 0.9970, confirming that the model can almost perfectly separate DDoS and benign traffic when class distribution is balanced.
+
+To assess the viability of kNN in a real-world scenario, inference was performed on a dataset with 80% benign traffic and 20% DDoS, with $200 thin 000$ samples. This is a much more difficult scenario, as there is significantly less DDoS traffic to train on. The inference confusion matrix (@fig:knn_confusion_infer) shows a degradation in DDoS recall with this unbalanced dataset. Of 200,000 samples, only $63 thin 993$ were correctly identified, yielding a DDoS recall of $32.0%$, a huge collapse when compared to the balanced dataset. This disparity comes from the distribution of data in our feature space - with a decision boundary created for balanced probability, a large amount of DDoS traffic samples are in regions dominated by benign traffic samples, creating many false negatives. The near-zero false positive rate confirms that the model can identify DDoS traffic that's representative, but fails when it's more similar to benign traffic.
+
+
+== Logistic Regression
+
+The results show that very small values of $C$ lead to underfitting, with both training and validation accuracy reduced. As $C$ increases, performance improves rapidly and stabilises around $C approx 0.046$. Beyond this point, further increases in $C$ yield negligible gains. The overfitting gap remains close to zero across all values, indicating that the model generalises well and does not exhibit meaningful overfitting.
+
+This behaviour suggests that the dataset is close to linearly separable with the chosen feature representation. Once sufficient model flexibility is reached, additional capacity does not improve performance. This places the model in a low-bias, low-variance regime, where both underfitting and overfitting effects are minimal.
+
+While regularisation has limited influence beyond moderate values, the classification threshold strongly affects the model’s operational behaviour. Using the best validation model, we evaluate thresholds between $0.1$ and $0.9$.
+
+Increasing the threshold makes the classifier more conservative: fewer flows are classified as DDoS, which reduces the false positive rate (FPR) and increases precision, but lowers recall. Conversely, lower thresholds maximize detection but increase false positives.
+
+For example, at threshold $0.5$, the model achieves approximately FPR $approx 0.028$ and recall $approx 0.9995$. Increasing the threshold to $0.9$ reduces the FPR to approximately $0.015$, while recall drops to approximately $0.9588$. This demonstrates a clear trade-off between detection sensitivity and false alarm rate.
+
+#figure(
+  image("images/lr/lr_threshold_sweep.png"),
+  caption: [Threshold sweep for logistic regression. Increasing the decision threshold reduces false positives and increases precision, but lowers recall.],
+)
+
+These results show that model performance is not characterized by a single operating point, but by a continuum of trade-offs. Threshold selection is therefore a critical design decision in deployment. In contrast to regularisation, which has limited impact after moderate values, the threshold directly controls the balance between security sensitivity and operational cost.
+
+A key advantage of logistic regression is interpretability. The learned coefficients directly indicate how each feature influences the prediction. Positive coefficients push predictions toward the DDoS class, while negative coefficients support the benign class.
+
+The most important DDoS-indicating features include:
+
+- `Init Bwd Win Bytes`
+- `SYN Flag Count`
+- `Protocol_6`
+- `Down/Up Ratio`
+
+These features align with known attack characteristics, such as abnormal TCP flag usage and protocol-level patterns typical of DDoS traffic.
+
+The most important benign-indicating features include:
+
+- `Fwd Segment Size Min`
+- `Fwd Packet Length Max`
+- `Protocol_17`
+- `PSH Flag Count`
+
+These features correspond to more stable and structured flow behaviour associated with legitimate traffic.
+
+#figure(
+  image("images/lr/lr_feature_coefficients.png"),
+  caption: [Most influential logistic regression coefficients. Positive values support the DDoS class, while negative values support the benign class.],
+)
+
+The alignment between learned coefficients and domain-relevant features suggests that the model captures meaningful structure rather than relying on spurious correlations. This interpretability is particularly valuable in security applications, where understanding the basis of a prediction is essential.
+
+Using the best validation configuration, logistic regression achieves strong performance on the held-out test set. The model reaches a test accuracy of $0.9855$ and a ROC-AUC of approximately $0.996$.
+
+Class-wise performance reveals a slight asymmetry:
+
+- Benign recall: $0.9715$
+- DDoS recall: $0.9995$
+
+This indicates that the model almost never misses attack traffic, but occasionally misclassifies benign flows as attacks. The confusion matrix confirms that most errors correspond to false positives rather than false negatives.
+
+#figure(
+  image("images/lr/lr_confusion_matrix.png"),
+  caption: [Confusion matrix on the test set. Errors are dominated by false positives rather than missed attacks.],
+)
+
+Cross-validation yields a mean accuracy of #text(fill: red)[(insert CV mean) with standard deviation (insert CV std)], indicating that performance is stable across different data splits and not driven by a particular partition of the data.
+
+A limitation of this evaluation is that the dataset is explicitly balanced and heavily preprocessed, which may simplify the classification task. In real-world scenarios, class imbalance and noisier feature distributions could reduce performance and increase the importance of threshold tuning.
+
+
+== Random Forest
+
 = Conclusion <sec:conclusion>
-//
-//
-// - Bullet points are super easy
-// - Like this!
-//
-// + Numbered lists too
-// + Wow
-//   + Even with indentation
-//   - and mixing!
-//
-//
-// Math, with equation labels:
-// $ T_upright("coarse") = c t f (n) $<eq:coarse>.
-// Or even inline $frac(n, 2)$ wowie
-// $ T_upright("fine") = op("max") (ceil(frac(c, 2n)) dot t f (n), thick t f (n)) $<eq:fine>.
-//
-// Figures! They CANNOT be in a super directory, like `../plots`, so we have to use `./images/`
-//
-// #figure(
-//   placement: top,
-//   image("images/roc_curve.png"),
-//   caption: [It's good practice to put figures at the top of the page and just cite them via label],
-// ) <fig:parallelscalability>
-//
-// In @fig:parallelscalability we can very clearly see that our experimental data matches the time complexity of access/mutation for our structures.
-//
-// Tables too:
-// #figure(
-//   placement: top,
-//   table(
-//     columns: 4,
-//     align: (left, right, right, right),
-//     inset: 4pt,
-//     stroke: 0.5pt + gray,
-//     table.header([*Structure*], [*$p$*], [*Max Speedup *], [*Eff. (16 threads)*]),
-//     [Coarse-grained List], [2.3%], [1.02$times$], [6.4%],
-//     [Coarse-grained BST], [92.7%], [13.64$times$], [45.4%],
-//     [Fine-grained List], [48.5%], [1.94$times$], [22.9%],
-//     [Fine-grained BST], [76.2%], [4.20$times$], [19.3%],
-//   ),
-//   caption: [Amdahl's Law metrics at 65536 job count],
-// )<fig:amdahls>
-//
-// Generally you can surround things in figures or blocks and such, it's all super functional, the typst website will guide you
-//
-// Typst website also have all the symbol names, and some symbols have subsets like $subset$ has $subset.eq$
+
+Logistic regression provides a strong, stable, and interpretable baseline for DDoS detection on this dataset.
+
+First, performance is largely insensitive to the regularisation parameter once the model is no longer under-constrained, and no significant overfitting is observed. Second, the classification threshold has a much larger effect on the trade-off between false positives and recall, making it the primary tuning mechanism for deployment. Third, coefficient analysis shows that the model relies on meaningful traffic features such as TCP flags, protocol indicators, and flow-level statistics.
+
+Taken together, these results suggest that the dataset is close to linearly separable and that logistic regression is sufficient to capture most of the available signal, while offering the advantages of simplicity, computational efficiency, and interpretability.
 
 #include "andi.typ"
 #include "conrad.typ"
