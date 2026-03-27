@@ -202,10 +202,12 @@ To study the sensitivity of logistic regression to L2 regularisation and to redu
 The best validation performance is achieved at $C ≈ 0.046$, with validation accuracy of approximately 0.9855.
 
 == Random Forest
+The random forest model was implemented with the sklearn randomforestclassifier, and was implemented as an ensemble of decision trees that were trained upon bootstrap samples. The RF prediction is computed by averaging tree class proabailities and thresholding at 0.5 (argmax for class label). Here, each split considered a random subset of features. The random forest made use of hyperparameter tuning via a number of estimators 
+n_estimators_values = [10, 25, 50, 75, 100, 150, 200]. For each estimator, the validation accuracy and overfitting gap were computed and the estimator with the highest validation accuracy was selected for the final model. This final model was then used on the test set. 
+ 
+ \
 
-#text(fill: red)[Random forest specific stuff]
-
-Once the models were evaluated, confusion matrices, ROC curves, and computed AUC scores were computed for each of them. The models themselves were also saved to later be used for inference. This inference was performed with identical dataset preprocessing on the unbalanced dataset. Confusion matrices, ROC curves, and AUC scores were also computed for the inference run, and only one run was performed per model as the results are deterministic.
+Once the models were evaluated, confusion matrices, ROC curves, and AUC scores were computed for each of them. The models themselves were also saved to later be used for inference. This inference was performed with identical dataset preprocessing on the unbalanced dataset. Confusion matrices, ROC curves, and AUC scores were also computed for the inference run, and only one run was performed per model as the results are deterministic.
 
 Throughout both training and analysis, performance statistics were collected. These were RAM usage, CPU time, and wall clock time. Training was done on a desktop computer equipped with a 12th Gen Intel(R) Core(TM) i7-12700K and 32GiB of DDR5 4800MHz RAM, and inference was ran on both the same desktop computer and a Raspberry Pi 4 with a Quad core Cortex-A72 (ARM v8) 64-bit SoC \@ 1.8GHz and 4GiB of DDR4 3200MHz RAM. This was done to measure performance under limited hardware.
 
