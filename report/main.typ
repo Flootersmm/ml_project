@@ -153,10 +153,6 @@ We expect that kNN will perform well because benign data clusters naturally, i.e
 3. kNN
 Over all, we expect the random forest model to outperform the other two when accounting for speed and accuracy.
 
-hypothesis now: Which machine learning approaches best minimise false positive rates while maintaining high detection accuracy for DDoS detection across varying hardware constraints?
-
-(not edited, reviewed, accurate subject to alteration of H)
-
 = Dataset and Preprocessing <sec:dataset_preprocessing>
 
 Three models were trained on a dataset consisting of network traffic, balanced between DDoS traffic and benign traffic. These models were kNN, logistic regression, and random forest. The data was extracted from public IDS datasets, produced in different years and with different techniques of generating traffic. There are $12 thin 794 thin 627$ datapoints and $84$ features. The models' inference abilities were then tested on an identically formed dataset that was unbalanced, with 20% DDoS traffic and 80% benign. Implementation of each model was provided by the `sklearn` library for Python.
