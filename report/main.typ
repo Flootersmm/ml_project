@@ -327,6 +327,8 @@ Class-wise performance reveals a slight asymmetry:
 
 This indicates that the model almost never misses attack traffic, but sometimes misclassifies benign flows as attacks. The confusion matrix confirms that most errors correspond to false positives rather than false negatives.
 
+Prioritising catching attacks over avoiding false alarms leans into a conservative detection strategy. While this may be the safer option for security settings, it also leads to unnecessary blocking of legitimate traffic. Therefore selecting an appropriate decision threshold is the most important factor when balancing the trade-off between detection perfoamcne and acceptable false positive rates.
+
 #figure(
   image("images/lr/lr_confusion_matrix.png"),
   caption: [Confusion matrix on the test set. Errors are dominated by false positives rather than missed attacks.],
