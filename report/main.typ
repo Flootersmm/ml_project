@@ -131,18 +131,18 @@ The report is structured as follows:
 
 = Related Work <sec:related_work>
 
-Previously, rule-based classifiers were used to detect DDoS attacks @dos_rulebased. This involves the categorisation data with a series of "if ... then ..." rules, generating descriptive models that are easy to interpret. This is an earlier machine learning method than the classifiers explored in this report, and therefore less expressive. Requiring distinct rules that must be carefully considered to provide good coverage and classification makes this kind of model perform poorly in exceptional scenarios. Real-world data is often fuzzy, and preventing DDoS attacks is an arms race - the complexity and upkeep of a rule-based classifier fighting new attacks with evolving signatuers makes them unwieldy.
+Previously, rule-based classifiers were used to detect DDoS attacks @dos_rulebased. This involves the categorisation data with a series of "if ... then ..." rules, generating descriptive models that are easy to interpret. This is an earlier machine learning method than the classifiers explored in this report, and therefore less expressive. Requiring distinct rules that must be carefully considered to provide good coverage and classification makes this kind of model perform poorly in exceptional scenarios. Real-world data is often fuzzy, and preventing DDoS attacks is an arms race - the complexity and upkeep of a rule-based classifier fighting new attacks with evolving signatures makes them unwieldy.
 
 There are many ways to use kNN, and one notable study reduces the feature space drastically to only four features @dos_knn. In constrast, this report applies kNn to all numeric features available in the dataset, a total of 79, to evaluate whether broader feature coverage improves performance or not.
 
 Other papers have investigated the usage of a kNN model to tackle DDoS attacks in real-time. It's correctly pointed out in @dos_knn_realtime that machine learning is a rapidly developing field, and therefore repeated investigation into model performance is important and relevant to consider. The author expressed interest in investigating the computational resource requirements for this real-time protection; resource-constrained IoT environments were less performant than desired and required further optimisation to reach a high level of effectiveness.
 
-While kNN does work well in many cases, it's downside is that it relies on heavy distance computations, which can slow it down for devices with limited resources. Therefore, we want to see if a simpler model could still get similar results. A natural choise for this is Logistic Regression, as it is often used as lightweight baseline model for network intrusion detection and it doesn't consume much resources. In his analysis of classic machine learning classifiers, Boadi shows that LR does score fairly high in accurcay AUC, but is outperformed by more complex models like Random Forest @boadi2025nslkdd.
+While kNN does work well in many cases, it's downside is that it relies on heavy distance computations, which can slow it down for devices with limited resources. Therefore, we want to see if a simpler model could still get similar results. A natural choice for this is Logistic Regression, as it is often used as lightweight baseline model for network intrusion detection and it doesn't consume much resources. In his analysis of classic machine learning classifiers, Boadi shows that LR does score fairly high in accuracy AUC, but is outperformed by more complex models like Random Forest @boadi2025nslkdd.
 
 Even if we are aware that LR might not deliver the best results out of all the models, it is still worth including, as its trade-off between performance and resource consumption is attractive and there are ways to maximize results. Research shows that LR can be improved significantly with careful preprocessing, such as feature selection and balanced data @chalichalamala2023lrec. This means that LR's effectiveness depends on how the data is set up just as much as it does on how complex the model itself is. One study that focuses on using LR in deployment emphasizes that can be scaled further through techniques like parallelized training and automated hyperparameter tuning, allowing for competitive performance while keeping computational overead low @kolukisa2024efficient.
 
 This means that LR is not just a popular baseline, but is especially a lightweight and effective model that using the right approach can be tuned to successfully handle the trade-offs between accuracy, falso positive rate and computational efficiency.
-#text(fill: red)[LR and RF papers here please!!!]
+#text(fill: red)[RF papers here please!!!]
 
 = Dataset and Preprocessing <sec:dataset_preprocessing>
 
@@ -264,7 +264,7 @@ Prior to finalising the model training, hyperparameters were evaluated from 1 to
   caption: [ROC curve for kNN on the balanced test set, with a AUC of $0.9970$.],
 ) <fig:knn_roc>
 
-Evaluated against the balanced dataset, the kNN model with a hyperparameter of $k = 1$ achievees near perfect recall. The training/validation confusion matrix (@fig:knn_confusion) shows shows $3 thin 988$ correct classifications and just 12 misclassifications, yielding an accuracy of $99.7%$ and equal recall of $99.7%$ for both classes. The corresponding ROC curve (@fig:knn_roc) achieves an AUC of $0.9970$, confirming that the model can almost perfectly separate DDoS and benign traffic when class distribution is balanced.
+Evaluated against the balanced dataset, the kNN model with a hyperparameter of $k = 1$ achievees near perfect recall. The training/validation confusion matrix (@fig:knn_confusion) shows $3 thin 988$ correct classifications and just 12 misclassifications, yielding an accuracy of $99.7%$ and equal recall of $99.7%$ for both classes. The corresponding ROC curve (@fig:knn_roc) achieves an AUC of $0.9970$, confirming that the model can almost perfectly separate DDoS and benign traffic when class distribution is balanced.
 
 To assess the viability of kNN in a real-world scenario, inference was performed on a dataset with 80% benign traffic and 20% DDoS, with $200 thin 000$ samples. This is a much more difficult scenario, as there is significantly less DDoS traffic to train on. The inference confusion matrix (@fig:knn_confusion_infer) shows a degradation in DDoS recall with this unbalanced dataset. Of $200 thin 000$ samples, only $63 thin 993$ were correctly identified, yielding a DDoS recall of $32.0%$, a huge collapse when compared to the balanced dataset. This disparity comes from the distribution of data in our feature space - with a decision boundary created for balanced probability, a large amount of DDoS traffic samples are in regions dominated by benign traffic samples, creating many false negatives. The near-zero false positive rate confirms that the model can identify DDoS traffic that's representative, but fails when it's more similar to benign traffic.
 
@@ -274,24 +274,24 @@ To assess the viability of kNN in a real-world scenario, inference was performed
 
 == Logistic Regression
 
-The results show that very small values of $C$ lead to underfitting, with both training and validation accuracy reduced. As $C$ increases, performance improves rapidly and stabilises around $C approx 0.046$. Beyond this point, further increases in $C$ yield negligible gains. The overfitting gap remains close to zero across all values, indicating that the model generalises well and does not exhibit meaningful overfitting.
+The results show when $C$ is too small it leads to underfitting, reducing both training and validation accuracy. When increasing $C$, the performance improves until it reaches $C approx 0.046$. From then on, increasing $C$ any further has practically no effect to the performance. The overfitting gap remains almost zero across all values, indicating that the model generalises well and does not overfit.
 
-This behaviour suggests that the dataset is close to linearly separable with the chosen feature representation. Once sufficient model flexibility is reached, additional capacity does not improve performance. This places the model in a low-bias, low-variance regime, where both underfitting and overfitting effects are minimal.
+This suggests that the data might be close to linearly seperable under our current feature representation. At this point the model is also flexible enough to capture the structure in the data, which is why even more additional capacity does not improve its performance. Once As soon as a certain level of flexibility is reached, adding more capacity does not improve the performance. Thus we can categorize it in a low-bias, low-variance regime, where both underfitting and overfitting effects are minimal.
 
-While regularisation has limited influence beyond moderate values, the classification threshold strongly affects the model’s operational behaviour. Using the best validation model, we evaluate thresholds between $0.1$ and $0.9$.
+While regularisation has little influence, the classification does have a strong impact on how the model behaves. Using the best validation model, we evaluate thresholds between $0.1$ and $0.9$.
 
-Increasing the threshold makes the classifier more conservative: fewer flows are classified as DDoS, which reduces the false positive rate (FPR) and increases precision, but lowers recall. Conversely, lower thresholds maximize detection but increase false positives.
+Increasing the threshold makes the classifier more conservative. This means that fewer flows are classified as DDoS, which reduces the FPR and increases precision, but lowers recall. In reverse, the advantage lowering the threshold is that it maximizes the number of detections, but the trade-off is that it also increases false positives.
 
-For example, at threshold $0.5$, the model achieves approximately FPR $approx 0.028$ and recall $approx 0.9995$. Increasing the threshold to $0.9$ reduces the FPR to approximately $0.015$, while recall drops to approximately $0.9588$. This demonstrates a clear trade-off between detection sensitivity and false alarm rate.
+For example, at threshold $0.5$, the model achieves FPR $approx 0.028$ and recall $approx 0.9995$. If the threshold is increased to $0.9$, it reduces the FPR to approximately $0.015$, however the recall drops to around $0.9588$. This clearly shows the trade-off between how sensitive the detection is and the false alarm rate.
 
 #figure(
   image("images/lr/lr_threshold_sweep.png"),
   caption: [Threshold sweep for logistic regression. Increasing the decision threshold reduces false positives and increases precision, but lowers recall.],
 )
 
-These results show that model performance is not characterized by a single operating point, but by a continuum of trade-offs. Threshold selection is therefore a critical design decision in deployment. In contrast to regularisation, which has limited impact after moderate values, the threshold directly controls the balance between security sensitivity and operational cost.
+These results show that model performance doesn't just depend on a single fixed setting, but rather on the chosen threshold, which controls the balance between detecting actual attacks and avoiding false positives. In contrast, regularisation has little effect once it reaches moderate values.
 
-A key advantage of logistic regression is interpretability. The learned coefficients directly indicate how each feature influences the prediction. Positive coefficients push predictions toward the DDoS class, while negative coefficients support the benign class.
+Another advantage of logistic regression is that it's easy to interpret, as the learned coefficients overtly show how each feature directly influences the prediction. Positive coefficients push predictions toward the DDoS class, while negative coefficients support the benign class.
 
 The most important DDoS-indicating features include:
 
@@ -316,16 +316,16 @@ These features correspond to more stable and structured flow behaviour associate
   caption: [Most influential logistic regression coefficients. Positive values support the DDoS class, while negative values support the benign class.],
 )
 
-The alignment between learned coefficients and domain-relevant features suggests that the model captures meaningful structure rather than relying on spurious correlations. This interpretability is particularly valuable in security applications, where understanding the basis of a prediction is essential.
+It is noteworthy, that the most important features match commonly known DDoS characteristics, suggesting that the model does not rely on random correlations, but is in fact learning meaningful and real patterns. This is useful in security settings, where it is relevant to understand why a prediction is made.
 
-Using the best validation configuration, logistic regression achieves strong performance on the held-out test set. The model reaches a test accuracy of $0.9855$ and a ROC-AUC of approximately $0.996$.
+Using the best validation setup, logistic regression performs well on the test-set, reaching an accuracy of $0.9855$ and a ROC-AUC of approximately $0.996$.
 
 Class-wise performance reveals a slight asymmetry:
 
 - Benign recall: $0.9715$
 - DDoS recall: $0.9995$
 
-This indicates that the model almost never misses attack traffic, but occasionally misclassifies benign flows as attacks. The confusion matrix confirms that most errors correspond to false positives rather than false negatives.
+This indicates that the model almost never misses attack traffic, but sometimes misclassifies benign flows as attacks. The confusion matrix confirms that most errors correspond to false positives rather than false negatives.
 
 #figure(
   image("images/lr/lr_confusion_matrix.png"),
