@@ -86,35 +86,6 @@ We used Jupyter, numpy, pandas, matplotlib, and sklearn. Jupyter was used for ea
 #set page(numbering: "1")
 
 = Abstract <sec:abstract>
-// #text(fill: blue)[
-//   #link("https://users.ece.cmu.edu/~koopman/essays/abstract.html")
-//
-//   Checklist: Parts of an Abstract
-//
-//   Despite the fact that an abstract is quite brief, it must do almost as much work as the multi-page paper that follows it. In a computer architecture paper, this means that it should in most cases include the following sections. Each section is typically a single sentence, although there is room for creativity. In particular, the parts may be merged or spread among a set of sentences. Use the following as a checklist for your next abstract:
-//
-//   Motivation:
-//   Why do we care about the problem and the results? If the problem isn't obviously "interesting" it might be better to put motivation first; but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the problem statement first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
-//   Problem statement:
-//   What problem are you trying to solve? What is the scope of your work (a generalized approach, or for a specific situation)? Be careful not to use too much jargon. In some cases it is appropriate to put the problem statement before the motivation, but usually this only works if most readers already understand why the problem is important.
-//   Approach:
-//   How did you go about solving or making progress on the problem? Did you use simulation, analytic models, prototype construction, or analysis of field data for an actual product? What was the extent of your work (did you look at one application program or a hundred programs in twenty different programming languages?) What important variables did you control, ignore, or measure?
-//   Results:
-//   What's the answer? Specifically, most good computer architecture papers conclude that something is so many percent faster, cheaper, smaller, or otherwise better than something else. Put the result there, in numbers. Avoid vague, hand-waving results such as "very", "small", or "significant." If you must be vague, you are only given license to do so when you can talk about orders-of-magnitude improvement. There is a tension here in that you should not provide numbers that can be easily misinterpreted, but on the other hand you don't have room for all the caveats.
-//   Conclusions:
-//   What are the implications of your answer? Is it going to change the world (unlikely), be a significant "win", be a nice hack, or simply serve as a road sign indicating that this path is a waste of time (all of the previous results are useful). Are your results general, potentially generalizable, or specific to a particular case?
-//
-//   Other Considerations
-//
-//   An abstract must be a fully self-contained, capsule description of the paper. It can't assume (or attempt to provoke) the reader into flipping through looking for an explanation of what is meant by some vague statement. It must make sense all by itself. Some points to consider include:
-//
-//   Meet the word count limitation. If your abstract runs too long, either it will be rejected or someone will take a chainsaw to it to get it down to size. Your purposes will be better served by doing the difficult task of cutting yourself, rather than leaving it to someone else who might be more interested in meeting size restrictions than in representing your efforts in the best possible manner. An abstract word limit of 150 to 200 words is common.
-//   Any major restrictions or limitations on the results should be stated, if only by using "weasel-words" such as "might", "could", "may", and "seem".
-//   Think of a half-dozen search phrases and keywords that people looking for your work might use. Be sure that those exact phrases appear in your abstract, so that they will turn up at the top of a search result listing.
-//   Usually the context of a paper is set by the publication it appears in (for example, IEEE Computer magazine's articles are generally about computer technology). But, if your paper appears in a somewhat un-traditional venue, be sure to include in the problem statement the domain or topic area that it is really applicable to.
-//   Some publications request "keywords". These have two purposes. They are used to facilitate keyword index searches, which are greatly reduced in importance now that on-line abstract text searching is commonly used. However, they are also used to assign papers to review committees or editors, which can be extremely important to your fate. So make sure that the keywords you pick make assigning your paper to a review category obvious (for example, if there is a list of conference topics, use your chosen topic area as one of the keyword tuples).]
-//
-
 Distributed Denial of Service (DDoS) attacks continue to disrupt network services, causing downtime and economic damage. Existing techniques for mitigating this often struggle to deal with evolving attack signatures @dos_rulebased. This paper investigates the design of DDoS detection models using machine learning. We evaluate three classifiers, k-Nearest Neighbours (kNN), Logistic Regression (LR), and Random Forests, by analysing their accuracy, false positive rates, and resource usage under controlled conditions. Our results indicate that kNN is too simple of a model to efficiently classify attacks, RF is significantly faster and very usable in all levels of hardware but slow to train, and LR beats the previous two models in every meaningful way. These findings suggest that model selection is dependent on hardware specifications and the relative importance of minimising false positives,  providing a practical guide for using machine learning-based DDoS detection in diverse contexts, but future work should be done to identify areas where LR may perform suboptimally.
 
 *Keywords*: DDoS detection, machine learning, false positive rate, k-Nearest Neighbours, Random Forest, Logistic Regression, computational efficiency
@@ -139,7 +110,7 @@ Other papers have investigated the usage of a kNN model to tackle DDoS attacks i
 
 While kNN does work well in many cases, it's downside is that it relies on heavy distance computations, which can slow it down for devices with limited resources. Therefore, we want to see if a simpler model could still get similar results. A natural choise for this is Logistic Regression, as it is often used as lightweight baseline model for network intrusion detection and it doesn't consume much resources. In his analysis of classic machine learning classifiers, Boadi shows that LR does score fairly high in accurcay AUC, but is outperformed by more complex models like Random Forest @boadi2025nslkdd.
 
-Even if we are aware that LR might not deliver the best results out of all the models, it is still worth including, as its trade-off between performance and resource consumption is attractive and there are ways to maximize results. Research shows that LR can be improved significantly with careful preprocessing, such as feature selection and balanced data @chalichalamala2023lrec. This means that LR's effectiveness depends on how the data is set up just as much as it does on how complex the model itself is. One study that focuses on using LR in deployment emphasizes that can be scaled further through techniques like parallelized training and automated hyperparameter tuning, allowing for competitive performance while keeping computational overead low @kolukisa2024efficient.
+Even if we are aware that LR might not deliver the best results out of all the models, it is still worth including, as its trade-off between performance and resource consumption is attractive and there are ways to maximise results. Research shows that LR can be improved significantly with careful preprocessing, such as feature selection and balanced data @chalichalamala2023lrec. This means that LR's effectiveness depends on how the data is set up just as much as it does on how complex the model itself is. One study that focuses on using LR in deployment emphasises that can be scaled further through techniques like parallelised training and automated hyperparameter tuning, allowing for competitive performance while keeping computational overead low @kolukisa2024efficient.
 
 This means that LR is not just a popular baseline, but is especially a lightweight and effective model that using the right approach can be tuned to successfully handle the trade-offs between accuracy, falso positive rate and computational efficiency.
 #text(fill: red)[LR and RF papers here please!!!]
@@ -280,7 +251,7 @@ This behaviour suggests that the dataset is close to linearly separable with the
 
 While regularisation has limited influence beyond moderate values, the classification threshold strongly affects the model’s operational behaviour. Using the best validation model, we evaluate thresholds between $0.1$ and $0.9$.
 
-Increasing the threshold makes the classifier more conservative: fewer flows are classified as DDoS, which reduces the false positive rate (FPR) and increases precision, but lowers recall. Conversely, lower thresholds maximize detection but increase false positives.
+Increasing the threshold makes the classifier more conservative: fewer flows are classified as DDoS, which reduces the false positive rate (FPR) and increases precision, but lowers recall. Conversely, lower thresholds maximise detection but increase false positives.
 
 For example, at threshold $0.5$, the model achieves approximately FPR $approx 0.028$ and recall $approx 0.9995$. Increasing the threshold to $0.9$ reduces the FPR to approximately $0.015$, while recall drops to approximately $0.9588$. This demonstrates a clear trade-off between detection sensitivity and false alarm rate.
 
@@ -289,7 +260,7 @@ For example, at threshold $0.5$, the model achieves approximately FPR $approx 0.
   caption: [Threshold sweep for logistic regression. Increasing the decision threshold reduces false positives and increases precision, but lowers recall.],
 )
 
-These results show that model performance is not characterized by a single operating point, but by a continuum of trade-offs. Threshold selection is therefore a critical design decision in deployment. In contrast to regularisation, which has limited impact after moderate values, the threshold directly controls the balance between security sensitivity and operational cost.
+These results show that model performance is not characterised by a single operating point, but by a continuum of trade-offs. Threshold selection is therefore a critical design decision in deployment. In contrast to regularisation, which has limited impact after moderate values, the threshold directly controls the balance between security sensitivity and operational cost.
 
 A key advantage of logistic regression is interpretability. The learned coefficients directly indicate how each feature influences the prediction. Positive coefficients push predictions toward the DDoS class, while negative coefficients support the benign class.
 
@@ -348,6 +319,3 @@ Logistic regression provides a strong, stable, and interpretable baseline for DD
 First, performance is largely insensitive to the regularisation parameter once the model is no longer under-constrained, and no significant overfitting is observed. Second, the classification threshold has a much larger effect on the trade-off between false positives and recall, making it the primary tuning mechanism for deployment. Third, coefficient analysis shows that the model relies on meaningful traffic features such as TCP flags, protocol indicators, and flow-level statistics.
 
 Taken together, these results suggest that the dataset is close to linearly separable and that logistic regression is sufficient to capture most of the available signal, while offering the advantages of simplicity, computational efficiency, and interpretability.
-
-#include "andi.typ"
-#include "conrad.typ"
